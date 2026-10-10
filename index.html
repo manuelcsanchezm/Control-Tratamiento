@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#2e6b8f">
+<meta name="theme-color" content="#1680b8">
 <title>Control de Tratamiento</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
@@ -13,36 +13,45 @@
 <meta name="apple-mobile-web-app-title" content="Tratamiento">
 <style>
 :root{
-  --bg:#f4f6f8; --surf:#ffffff; --surf2:#eaeff2; --line:#dbe3e8; --line2:#c2cfd7;
-  --tx:#1b2430; --tx2:#5a6876; --tx3:#8495a2;
-  --ac:#2e6b8f; --ac-tx:#235673; --ac-soft:#e2edf3;
-  --ok:#2f7d5a; --ok-soft:#e1f0e9;
-  --wa:#8a5a1f; --wa-soft:#f6eddc;
-  --cr:#a8392f; --cr-soft:#f8e5e3;
-  --sh:0 1px 2px rgba(27,36,48,.05), 0 2px 10px rgba(27,36,48,.04);
-  --r:10px;
-  --serif:Georgia,"Times New Roman",serif;
+  --bg:#f1f7fb; --surf:#ffffff; --surf2:#e7f1f8; --line:#d8e7f1; --line2:#b6d1e2;
+  --tx:#13293a; --tx2:#4d6779; --tx3:#7c94a6;
+  --ac:#1680b8; --ac-tx:#11648f; --ac-soft:#e1f1fa;
+  --ac2:#0eb3a6; --ac2-soft:#d9f6f3;
+  --ac3:#f5821f; --ac3-soft:#ffeedc;
+  --ok:#1aa06a; --ok-soft:#dbf5e8;
+  --wa:#d9811a; --wa-soft:#fdefdb;
+  --cr:#d94f3d; --cr-soft:#fde7e4;
+  --sh:0 1px 2px rgba(19,41,58,.05), 0 3px 14px rgba(19,41,58,.06);
+  --sh2:0 4px 18px rgba(22,128,184,.18);
+  --r:16px;
+  --serif:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#13191f; --surf:#1b232b; --surf2:#232d37; --line:#2e3a45; --line2:#3d4c59;
-    --tx:#e8edf1; --tx2:#a3b2bf; --tx3:#7b8c9a;
-    --ac:#6cb0d8; --ac-tx:#9ccce9; --ac-soft:#1e3442;
-    --ok:#62c396; --ok-soft:#18312a;
-    --wa:#d2a05c; --wa-soft:#32281a;
-    --cr:#e2857a; --cr-soft:#36211f;
-    --sh:0 1px 2px rgba(0,0,0,.3), 0 2px 10px rgba(0,0,0,.2);
+    --bg:#0e1a24; --surf:#16242f; --surf2:#1e303d; --line:#2a3f4f; --line2:#3b5568;
+    --tx:#e9f2f8; --tx2:#a0b6c6; --tx3:#7a93a5;
+    --ac:#4cb3e6; --ac-tx:#80cdf2; --ac-soft:#13303f;
+    --ac2:#2fd6c6; --ac2-soft:#0f3330;
+    --ac3:#ffa552; --ac3-soft:#38270f;
+    --ok:#4fd49d; --ok-soft:#113327;
+    --wa:#f0ad5c; --wa-soft:#33260f;
+    --cr:#f08478; --cr-soft:#3a1f1c;
+    --sh:0 1px 2px rgba(0,0,0,.3), 0 3px 14px rgba(0,0,0,.25);
+    --sh2:0 4px 18px rgba(0,0,0,.4);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#13191f; --surf:#1b232b; --surf2:#232d37; --line:#2e3a45; --line2:#3d4c59;
-  --tx:#e8edf1; --tx2:#a3b2bf; --tx3:#7b8c9a;
-  --ac:#6cb0d8; --ac-tx:#9ccce9; --ac-soft:#1e3442;
-  --ok:#62c396; --ok-soft:#18312a;
-  --wa:#d2a05c; --wa-soft:#32281a;
-  --cr:#e2857a; --cr-soft:#36211f;
-  --sh:0 1px 2px rgba(0,0,0,.3), 0 2px 10px rgba(0,0,0,.2);
+  --bg:#0e1a24; --surf:#16242f; --surf2:#1e303d; --line:#2a3f4f; --line2:#3b5568;
+  --tx:#e9f2f8; --tx2:#a0b6c6; --tx3:#7a93a5;
+  --ac:#4cb3e6; --ac-tx:#80cdf2; --ac-soft:#13303f;
+  --ac2:#2fd6c6; --ac2-soft:#0f3330;
+  --ac3:#ffa552; --ac3-soft:#38270f;
+  --ok:#4fd49d; --ok-soft:#113327;
+  --wa:#f0ad5c; --wa-soft:#33260f;
+  --cr:#f08478; --cr-soft:#3a1f1c;
+  --sh:0 1px 2px rgba(0,0,0,.3), 0 3px 14px rgba(0,0,0,.25);
+  --sh2:0 4px 18px rgba(0,0,0,.4);
 }
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -84,7 +93,10 @@ header .pac{color:var(--tx2);font-size:14px;}
 .toma .med .d{color:var(--tx2);font-size:13px;}
 .toma .med .quien{color:var(--ok);font-size:12.5px;margin-top:1px;}
 .btn-toma{border:1.5px solid var(--line2);background:var(--surf);border-radius:99px;
-  padding:8px 15px;font-size:13.5px;font-weight:600;white-space:nowrap;}
+  padding:9px 17px;font-size:13.5px;font-weight:700;white-space:nowrap;
+  transition:transform .15s ease;}
+.btn-toma:active{transform:scale(.93);}
+.btn-toma[data-on="1"]{animation:pop .4s ease;}
 .btn-toma[data-on="1"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);}
 
 .franja{display:flex;gap:1px;background:var(--line);border-radius:7px;overflow:hidden;margin-top:12px;}
@@ -121,13 +133,15 @@ header .pac{color:var(--tx2);font-size:14px;}
 .campo{flex:1;min-width:132px;}
 label{display:block;color:var(--tx2);font-size:12.5px;margin-bottom:3px;}
 input,select{width:100%;background:var(--surf);color:var(--tx);border:1px solid var(--line2);
-  border-radius:7px;padding:9px 10px;font:inherit;}
+  border-radius:12px;padding:10px 11px;font:inherit;}
 .chk{display:flex;align-items:center;gap:8px;margin-bottom:11px;color:var(--tx2);font-size:13.5px;}
 .chk input{width:auto;}
-.btn{background:var(--ac);color:#fff;border:none;border-radius:7px;padding:10px 17px;
-  font-weight:600;font-size:14px;}
-.btn.sec{background:var(--surf);color:var(--ac-tx);border:1px solid var(--line2);}
-.btn.peli{background:var(--surf);color:var(--cr);border:1px solid var(--cr);}
+.btn{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border:none;
+  border-radius:13px;padding:11px 19px;font-weight:700;font-size:14px;
+  box-shadow:var(--sh2);transition:transform .15s ease;}
+.btn:active{transform:scale(.96);}
+.btn.sec{background:var(--surf);color:var(--ac-tx);border:1.5px solid var(--line2);box-shadow:none;}
+.btn.peli{background:var(--surf);color:var(--cr);border:1.5px solid var(--cr);box-shadow:none;}
 .btn:disabled{opacity:.5;cursor:default;}
 .btns{display:flex;gap:8px;flex-wrap:wrap;}
 .btn-x{background:none;border:none;color:var(--tx3);font-size:19px;padding:2px 7px;line-height:1;}
@@ -141,6 +155,19 @@ input,select{width:100%;background:var(--surf);color:var(--tx);border:1px solid 
   bottom:calc(86px + env(safe-area-inset-bottom));
   background:var(--tx);color:var(--bg);padding:9px 16px;border-radius:99px;font-size:13.5px;
   font-weight:600;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.25);max-width:calc(100% - 32px);}
+
+/* ---------- instalación ---------- */
+.inst{background:var(--ac-soft);border:1px solid var(--ac);border-radius:var(--r);
+  padding:13px 14px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;}
+.inst svg{flex:0 0 auto;width:26px;height:26px;fill:none;stroke:var(--ac-tx);
+  stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;margin-top:1px;}
+.inst .c{flex:1;min-width:0;}
+.inst .t{font-weight:650;color:var(--ac-tx);margin-bottom:2px;}
+.inst p{margin:0 0 9px;font-size:13.3px;color:var(--ac-tx);}
+.inst .pasos{margin:0 0 9px;padding-left:18px;font-size:13.3px;color:var(--ac-tx);}
+.inst .pasos li{margin-bottom:2px;}
+.inst kbd{background:var(--surf);border:1px solid var(--line2);border-bottom-width:2px;
+  border-radius:4px;padding:0 5px;font-size:12.5px;font-family:inherit;white-space:nowrap;}
 
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--surf);border-top:1px solid var(--line);
   display:flex;z-index:10;padding-bottom:env(safe-area-inset-bottom);}
@@ -159,6 +186,86 @@ nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;
   nav button[aria-selected="true"]{border-bottom-color:var(--ac);}
   .aviso{bottom:28px;}
 }
+/* ===================== animación ===================== */
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.28)}70%{transform:scale(.92)}100%{transform:scale(1)}}
+@keyframes flota{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-7px) rotate(4deg)}}
+@keyframes onda{0%{transform:scale(.7);opacity:.55}100%{transform:scale(1.5);opacity:0}}
+@keyframes brilla{0%{background-position:-180% 0}100%{background-position:180% 0}}
+@keyframes saluda{0%,70%,100%{transform:rotate(0)}80%{transform:rotate(13deg)}90%{transform:rotate(-9deg)}}
+
+
+/* ===================== semana: círculos por día ===================== */
+.semana{display:flex;gap:4px;padding:4px 2px 2px;}
+.dia{flex:1;min-width:0;text-align:center;}
+.dia .dl{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;
+  letter-spacing:.3px;margin-bottom:5px;}
+.dia .db{position:relative;margin:0 auto;width:38px;height:38px;border-radius:50%;
+  display:grid;place-items:center;border:2px solid var(--line2);background:var(--surf2);
+  color:var(--tx3);font-weight:700;font-size:13px;transition:transform .18s ease;}
+.dia .db svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:3;
+  stroke-linecap:round;stroke-linejoin:round;}
+.dia[data-s="ok"] .db{background:var(--ok);border-color:var(--ok);color:#fff;}
+.dia[data-s="pa"] .db{background:var(--wa-soft);border-color:var(--wa);color:var(--wa);}
+.dia[data-s="no"] .db{background:var(--cr-soft);border-color:var(--cr);color:var(--cr);}
+.dia[data-hoy="1"] .db{box-shadow:0 0 0 3px var(--surf),0 0 0 5px var(--ac);}
+.dia[data-hoy="1"] .dl{color:var(--ac-tx);}
+.dia[data-nuevo="1"] .db{animation:pop .45s ease;}
+
+/* ===================== cabecera alegre ===================== */
+.hero{display:flex;align-items:center;gap:13px;background:
+  linear-gradient(135deg,var(--ac) 0%,var(--ac2) 100%);
+  border-radius:var(--r);padding:15px 17px;margin-bottom:12px;color:#fff;
+  box-shadow:var(--sh2);}
+.hero .ht{flex:1;min-width:0;}
+.hero .h1{font-size:17px;font-weight:700;letter-spacing:-.2px;}
+.hero .h2{font-size:13.2px;opacity:.93;margin-top:2px;}
+.hero .ico{flex:0 0 auto;width:52px;height:52px;position:relative;display:grid;place-items:center;}
+.hero .ico .o{position:absolute;inset:0;border-radius:50%;border:2px solid #fff;opacity:0;
+  animation:onda 2.4s ease-out infinite;}
+.hero .ico .o:nth-child(2){animation-delay:.8s}
+.hero .ico svg{width:30px;height:30px;position:relative;animation:flota 3.6s ease-in-out infinite;}
+.hero .pct{flex:0 0 auto;text-align:center;}
+.hero .pct b{display:block;font-size:24px;font-weight:800;line-height:1;}
+.hero .pct span{font-size:10.5px;opacity:.9;text-transform:uppercase;letter-spacing:.4px;}
+
+/* ===================== ánimo ===================== */
+.animo{display:flex;gap:7px;padding:4px 0 2px;}
+.animo button{flex:1;min-width:0;background:var(--surf2);border:2px solid transparent;
+  border-radius:14px;padding:9px 2px 7px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  transition:transform .15s ease,border-color .15s ease,background .15s ease;}
+.animo button svg{width:34px;height:34px;}
+.animo button .et{font-size:10.5px;font-weight:600;color:var(--tx3);}
+.animo button:active{transform:scale(.93);}
+.animo button[aria-pressed="true"]{background:var(--ac-soft);border-color:var(--ac);}
+.animo button[aria-pressed="true"] .et{color:var(--ac-tx);}
+.animo button[aria-pressed="true"] svg{animation:pop .4s ease;}
+
+/* ===================== síntomas ===================== */
+.sint{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.sint:last-of-type{border-bottom:none;}
+.sint .sn{flex:1;min-width:104px;font-weight:600;font-size:14px;}
+.niv{display:flex;gap:5px;}
+.niv button{width:40px;height:32px;border-radius:9px;border:1.5px solid var(--line2);
+  background:var(--surf);color:var(--tx3);font-size:11.5px;font-weight:700;
+  transition:transform .14s ease;}
+.niv button:active{transform:scale(.9);}
+.niv button[aria-pressed="true"]{color:#fff;border-color:transparent;animation:pop .35s ease;}
+.niv button[data-n="0"][aria-pressed="true"]{background:var(--ok);}
+.niv button[data-n="1"][aria-pressed="true"]{background:var(--ac2);}
+.niv button[data-n="2"][aria-pressed="true"]{background:var(--wa);}
+.niv button[data-n="3"][aria-pressed="true"]{background:var(--cr);}
+
+/* ===================== racha / logro ===================== */
+.racha{display:flex;align-items:center;gap:11px;background:var(--ac3-soft);
+  border:1px solid var(--ac3);border-radius:var(--r);padding:11px 14px;margin-bottom:12px;}
+.racha svg{flex:0 0 auto;width:26px;height:26px;animation:saluda 3.2s ease-in-out infinite;}
+.racha .rt{flex:1;min-width:0;font-size:13.5px;color:var(--tx);}
+.racha .rt b{color:var(--ac3);}
+
+/* ===================== ilustración de vacío ===================== */
+.ilus{display:block;margin:0 auto 10px;width:118px;height:auto;}
+.ilus .fl{animation:flota 4.2s ease-in-out infinite;transform-origin:center;}
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
 </style>
 </head>
@@ -180,6 +287,10 @@ nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;
   <button role="tab" aria-selected="true" data-v="hoy">
     <svg viewBox="0 0 24 24"><path d="M9 11l3 3 7-7"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
     Hoy</button>
+  <button role="tab" aria-selected="false" data-v="dia">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 007 0"/>
+      <path d="M9 9.5v.01M15 9.5v.01"/></svg>
+    Diario</button>
   <button role="tab" aria-selected="false" data-v="ex">
     <svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 5-7 4 5"/><path d="M3 21h18"/></svg>
     Exámenes</button>
@@ -198,8 +309,8 @@ nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;
 "use strict";
 
 /* ===================== almacenamiento (IndexedDB) ===================== */
-const DB_NAME = "control-tratamiento-db", DB_VER = 1;
-const STORES = ["config", "tomas", "examenes"];
+const DB_NAME = "control-tratamiento-db", DB_VER = 2;
+const STORES = ["config", "tomas", "examenes", "diario"];
 let _db = null;
 
 function abrirDB(){
@@ -229,8 +340,68 @@ const idbVals = s       => idbOp(s, "readonly",  o => o.getAll());
 const idbClear= s       => idbOp(s, "readwrite", o => o.clear());
 
 /* ===================== estado ===================== */
-const CFG_DEF = { paciente:"", unidad:"mEq/L", rango:{min:0.6,max:1.2}, medicamentos:[], recordatorios:false };
-const S = { vista:"hoy", cfg:{...CFG_DEF}, tomas:{}, examenes:[], quien:"", listo:false };
+const SINT_DEF = [
+  { id:"s1", nombre:"Náuseas" },
+  { id:"s2", nombre:"Temblor" },
+  { id:"s3", nombre:"Mucha sed" },
+  { id:"s4", nombre:"Sueño / cansancio" },
+  { id:"s5", nombre:"Dolor de cabeza" }
+];
+const CFG_DEF = { paciente:"", unidad:"mEq/L", rango:{min:0.6,max:1.2}, medicamentos:[],
+                  sintomas:[...SINT_DEF], recordatorios:false };
+const S = { vista:"hoy", cfg:{...CFG_DEF}, tomas:{}, examenes:[], diario:{}, quien:"", listo:false };
+
+/* ánimo: 1 = muy mal … 5 = muy bien */
+const ANIMOS = [
+  { n:1, et:"Mal",      c:"var(--cr)",  boca:"M8.6 15.6a4.4 4.4 0 016.8 0", ceja:1 },
+  { n:2, et:"Regular",  c:"var(--wa)",  boca:"M8.8 15.1a4.2 4.2 0 016.4-.6", ceja:0 },
+  { n:3, et:"Normal",   c:"var(--tx3)", boca:"M8.7 14.6h6.6", ceja:0 },
+  { n:4, et:"Bien",     c:"var(--ac2)", boca:"M8.6 13.6a4.4 4.4 0 006.8 0", ceja:0 },
+  { n:5, et:"Muy bien", c:"var(--ok)",  boca:"M8 13a5 5 0 008 0", ceja:2 }
+];
+/* carita SVG; ojos cerrados y arqueados en el nivel más alto */
+function caraSVG(a, tam){
+  const t = tam || 34;
+  const ojos = a.ceja === 2
+    ? `<path d="M8.6 10.6a1.7 1.7 0 012.8 0M12.6 10.6a1.7 1.7 0 012.8 0"/>`
+    : `<path d="M9.7 10.4v.01M14.3 10.4v.01" stroke-width="2.4"/>`;
+  const cejas = a.ceja === 1 ? `<path d="M8.2 7.9l2.6 1.1M15.8 7.9l-2.6 1.1" stroke-width="1.5"/>` : "";
+  return `<svg viewBox="0 0 24 24" width="${t}" height="${t}" aria-hidden="true"
+    fill="none" stroke="${a.c}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="9.2" fill="none"/>${cejas}${ojos}<path d="${a.boca}"/></svg>`;
+}
+const animoDe = n => ANIMOS.find(a => a.n === n) || null;
+const NIV_ET = ["Nada","Poco","Medio","Harto"];
+
+/* ---------- dibujos ---------- */
+/* cápsula flotando con sus ondas, igual que el ícono de la app */
+function ilusPastilla(){
+  return `<svg class="ilus" viewBox="0 0 120 120" role="img" aria-label="Cápsula">
+    <g stroke="var(--ac)" fill="none" stroke-width="3" stroke-linecap="round" opacity=".32">
+      <path d="M26 42a26 26 0 00-8 18"/><path d="M36 30a40 40 0 00-16 30"/>
+      <path d="M94 78a26 26 0 008-18"/><path d="M84 90a40 40 0 0016-30"/>
+    </g>
+    <g class="fl" transform="rotate(-38 60 60)">
+      <rect x="40" y="26" width="40" height="68" rx="20" fill="var(--ac2)"/>
+      <path d="M40 60h40v14a20 20 0 01-20 20 20 20 0 01-20-20z" fill="var(--ac3)"/>
+      <rect x="40" y="26" width="40" height="68" rx="20" fill="none" stroke="var(--surf)" stroke-width="2.5"/>
+      <path d="M40 60h40" stroke="var(--surf)" stroke-width="2.5"/>
+      <path d="M50 36a10 10 0 015-6" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".55" fill="none"/>
+    </g></svg>`;
+}
+/* cuadernito del diario */
+function ilusDiario(){
+  return `<svg class="ilus" viewBox="0 0 120 120" role="img" aria-label="Diario">
+    <g class="fl">
+      <rect x="28" y="22" width="64" height="78" rx="9" fill="var(--ac-soft)" stroke="var(--ac)" stroke-width="3"/>
+      <path d="M44 22v78" stroke="var(--ac)" stroke-width="3"/>
+      <g stroke="var(--ac)" stroke-width="3.4" stroke-linecap="round" opacity=".55">
+        <path d="M55 44h26"/><path d="M55 56h26"/><path d="M55 68h16"/></g>
+      <circle cx="78" cy="84" r="13" fill="var(--ac3)"/>
+      <g stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none">
+        <path d="M74 81v.01M82 81v.01" stroke-width="2.8"/><path d="M73.5 87a5.5 5.5 0 009 0"/></g>
+    </g></svg>`;
+}
 
 /* ===================== utilidades ===================== */
 const dosDig = n => String(n).padStart(2,"0");
@@ -243,6 +414,48 @@ const nHoy   = () => { const d = new Date(); return dosDig(d.getHours())+":"+dos
 const esc    = s => String(s==null?"":s).replace(/[&<>"']/g, c =>
                  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const nuevoId= () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+/* ---------- instalación en el teléfono ---------- */
+let promptInstalar = null;
+const DESCARTE = "tratamiento-inst-no";
+
+const yaInstalada = () =>
+  matchMedia("(display-mode: standalone)").matches ||
+  matchMedia("(display-mode: fullscreen)").matches ||
+  navigator.standalone === true;
+const esIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) ||
+  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const descartado = () => { try { return localStorage.getItem(DESCARTE) === "1"; } catch(_){ return false; } };
+
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  promptInstalar = e;
+  render();
+});
+window.addEventListener("appinstalled", () => {
+  promptInstalar = null;
+  try { localStorage.removeItem(DESCARTE); } catch(_){ }
+  render();
+  aviso("Listo: ya quedó en tu pantalla de inicio");
+});
+
+/* El aviso de arriba en «Hoy»; en Ajustes vive la versión completa */
+function bannerInstalar(){
+  if(yaInstalada() || descartado()) return "";
+  if(!promptInstalar && !esIOS()) return "";
+  const icono = `<svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/>
+      <path d="M12 7v7"/><path d="M9 11l3 3 3-3"/></svg>`;
+  if(promptInstalar) return `<div class="inst">${icono}<div class="c">
+      <div class="t">Déjala en tu pantalla de inicio</div>
+      <p>Queda con su propio ícono, se abre a pantalla completa y funciona sin internet.</p>
+      <div class="btns"><button class="btn" id="i-add">Instalar app</button>
+        <button class="btn sec" id="i-no">Ahora no</button></div></div></div>`;
+  return `<div class="inst">${icono}<div class="c">
+      <div class="t">Déjala en tu pantalla de inicio</div>
+      <ol class="pasos"><li>Toca <kbd>Compartir</kbd> abajo en Safari.</li>
+        <li>Elige <kbd>Agregar a inicio</kbd>.</li></ol>
+      <div class="btns"><button class="btn sec" id="i-no">Entendido</button></div></div></div>`;
+}
 
 function zona(v){ const r = S.cfg.rango; if(v < r.min) return "bajo"; if(v > r.max) return "alto"; return "rango"; }
 function zonaTxt(z){ return z==="bajo" ? "bajo rango" : z==="alto" ? "sobre rango" : "en rango"; }
@@ -276,10 +489,46 @@ function adherencia(n){
   return tot ? { tot, hechas, pct: Math.round(hechas*100/tot) } : null;
 }
 
+/* ---------- diario: ánimo y síntomas ---------- */
+const DIA_DEF = { animo:null, sintomas:{}, nota:"" };
+function diaDe(f){ return S.diario[f] || { fecha:f, ...DIA_DEF, sintomas:{} }; }
+
+/* días seguidos (hasta ayer) con todas las tomas marcadas */
+function racha(){
+  const esp = esperadas(); if(!esp.length) return 0;
+  let n = 0;
+  for(let i = 1; i <= 60; i++){
+    const r = regsDe(diaISO(i));
+    if(esp.every(e => r[e.key] && r[e.key].tomada)) n++; else break;
+  }
+  return n;
+}
+
+/* fila de los últimos 7 días, con el círculo de cada uno */
+function semana(){
+  const esp = esperadas();
+  const L = ["D","L","M","M","J","V","S"];
+  const chulo = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4.5 4.5L19 7"/></svg>`;
+  let out = "";
+  for(let i = 6; i >= 0; i--){
+    const fd = diaISO(i), rr = regsDe(fd), d = new Date(fd + "T12:00:00");
+    const n = esp.filter(e => rr[e.key] && rr[e.key].tomada).length;
+    const comp = esp.length && n === esp.length;
+    const s = comp ? "ok" : n > 0 ? "pa" : (i === 0 ? "" : "no");
+    out += `<div class="dia" data-s="${s}" data-hoy="${i===0?1:0}" data-nuevo="${comp&&i===0?1:0}"
+        title="${fmtFL(fd)}: ${n} de ${esp.length}">
+      <div class="dl">${L[d.getDay()]}</div>
+      <div class="db">${comp ? chulo : (n > 0 ? n : (i===0 ? "·" : "–"))}</div>
+    </div>`;
+  }
+  return `<div class="semana">${out}</div>`;
+}
+
 /* ===================== vista: Hoy ===================== */
 function vHoy(){
   const esp = esperadas(), f = hoyISO(), r = regsDe(f);
   if(!esp.length) return `<div class="card"><div class="card-b vacio">
+      ${ilusPastilla()}
       Todavía no hay medicamentos configurados.<br>
       Agrégalos en <b>Ajustes</b> para empezar a registrar las tomas.</div></div>`;
 
@@ -305,18 +554,42 @@ function vHoy(){
     franja += `<div data-s="${s}" title="${fmtFL(fd)}: ${n} de ${esp.length}"></div>`;
   }
   const ad = adherencia(14);
+  const falta = esp.length - hechas;
+  const pctHoy = Math.round(hechas*100/esp.length);
 
-  return `<div class="card">
+  const hero = `<div class="hero">
+    <div class="ico"><span class="o"></span><span class="o"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="7.5" y="2.5" width="9" height="19" rx="4.5"/><path d="M7.5 12h9"/></svg></div>
+    <div class="ht">
+      <div class="h1">${falta === 0 ? "¡Día completo!" : falta === esp.length ? "Partamos el día" : "Vas bien"}</div>
+      <div class="h2">${falta === 0
+        ? "Marcaste todas las tomas de hoy."
+        : falta === 1 ? "Queda 1 toma por marcar." : "Quedan " + falta + " tomas por marcar."}</div>
+    </div>
+    <div class="pct"><b class="num">${pctHoy}%</b><span>hoy</span></div>
+  </div>`;
+
+  const r7 = racha();
+  const estrella = `<svg viewBox="0 0 24 24" fill="var(--ac3)" aria-hidden="true">
+    <path d="M12 2.6l2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.45 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95z"/></svg>`;
+  const rachaHTML = r7 >= 2
+    ? `<div class="racha">${estrella}<div class="rt"><b>${r7} días seguidos</b> sin saltarte ninguna toma. Sigue así.</div></div>`
+    : "";
+
+  return hero + rachaHTML + `<div class="card">
     <div class="card-h"><h2>Tomas de hoy</h2><span class="sub num">${hechas} de ${esp.length}</span></div>
     ${filas}
-    <div class="card-b" style="padding-top:4px;">
+    <div class="card-b" style="padding-top:8px;">
+      ${semana()}
       <div class="franja">${franja}</div>
       <div class="franja-lbl">
         <span class="num">${fmtFL(diaISO(13))}</span>
-        <span>${ad ? ad.pct+"% cumplidas" : ""}</span>
+        <span>${ad ? ad.pct+"% en 14 días" : ""}</span>
         <span class="num">${fmtFL(hoyISO())}</span>
       </div>
-    </div></div>` + ultimoExamen();
+    </div></div>` + recordatorioDiario() + ultimoExamen();
 }
 
 function ultimoExamen(){
@@ -335,6 +608,124 @@ function ultimoExamen(){
         <div class="v" style="font-size:16px;padding-top:4px;">
           <span class="pill" data-z="${z}">${zonaTxt(z)}</span></div></div>
     </div></div></div>`;
+}
+
+/* tarjetita en «Hoy» que invita a llenar el diario si aún no se hizo */
+function recordatorioDiario(){
+  const d = diaDe(hoyISO());
+  if(d.animo) return "";
+  return `<div class="card"><div class="card-b" style="display:flex;align-items:center;gap:12px;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-weight:700;margin-bottom:2px;">¿Cómo te sentiste hoy?</div>
+      <div style="color:var(--tx2);font-size:13.3px;">
+        Anótalo en el diario. Así el médico ve si algo te cae mal.</div>
+    </div>
+    <button class="btn" data-ir="dia">Anotar</button>
+  </div></div>`;
+}
+
+/* ===================== vista: Diario ===================== */
+function vDiario(){
+  const f = hoyISO(), d = diaDe(f);
+  const sints = S.cfg.sintomas || [];
+
+  const caras = ANIMOS.map(a => `<button data-animo="${a.n}" aria-pressed="${d.animo===a.n}"
+      title="${a.et}">${caraSVG(a)}<span class="et">${a.et}</span></button>`).join("");
+
+  const filasS = sints.length ? sints.map(s => {
+    const n = d.sintomas[s.id];
+    const bot = NIV_ET.map((et,i) => `<button data-sint="${esc(s.id)}" data-n="${i}"
+        aria-pressed="${n===i}" title="${et}">${et}</button>`).join("");
+    return `<div class="sint"><div class="sn">${esc(s.nombre)}</div><div class="niv">${bot}</div></div>`;
+  }).join("") : `<div class="card-b vacio" style="padding:18px 14px;">
+      Sin síntomas configurados. Agrégalos en <b>Ajustes</b>.</div>`;
+
+  const hoyCard = `<div class="card">
+    <div class="card-h"><h2>¿Cómo te sientes hoy?</h2>
+      <span class="sub num">${fmtFL(f)}</span></div>
+    <div class="card-b"><div class="animo">${caras}</div></div></div>
+
+    <div class="card"><div class="card-h"><h2>¿Sentiste algo de esto?</h2>
+      <span class="sub">toca el nivel</span></div>
+    ${filasS}</div>
+
+    <div class="card"><div class="card-h"><h2>¿Algo más que contar?</h2></div>
+    <div class="card-b">
+      <div class="fila"><div class="campo">
+        <input type="text" id="d-nota" value="${esc(d.nota)}"
+          placeholder="Me dolió la guata después del almuerzo…"></div></div>
+      <button class="btn" id="d-nota-save">Guardar nota</button>
+    </div></div>`;
+
+  return hoyCard + graficoAnimo() + historialDiario();
+}
+
+/* gráfico del ánimo de los últimos 14 días */
+function graficoAnimo(){
+  const dias = [];
+  for(let i=13; i>=0; i--){ const f = diaISO(i); dias.push({ f, d: S.diario[f] }); }
+  if(!dias.some(x => x.d && x.d.animo))
+    return `<div class="card"><div class="card-b vacio">${ilusDiario()}
+      Cuando lleves unos días anotando, acá vas a ver cómo te has sentido.</div></div>`;
+
+  const W=640, H=190, mL=30, mR=16, mT=16, mB=30;
+  const iw = W-mL-mR, ih = H-mT-mB;
+  const Y = v => mT + ih - ((v-1)/4)*ih;
+  const X = i => mL + (i/(dias.length-1))*iw;
+
+  let ticks = "";
+  for(const a of ANIMOS)
+    ticks += `<line x1="${mL}" y1="${Y(a.n)}" x2="${W-mR}" y2="${Y(a.n)}" stroke="var(--line)" stroke-width="1"/>`;
+
+  const pts = dias.map((x,i) => ({ i, n: x.d && x.d.animo ? x.d.animo : null })).filter(p => p.n);
+  let linea = "";
+  for(let k=1; k<pts.length; k++){
+    if(pts[k].i - pts[k-1].i === 1)
+      linea += `<line x1="${X(pts[k-1].i)}" y1="${Y(pts[k-1].n)}" x2="${X(pts[k].i)}" y2="${Y(pts[k].n)}"
+        stroke="var(--ac)" stroke-width="2.2" stroke-linecap="round"/>`;
+  }
+  const puntos = pts.map(p => {
+    const a = animoDe(p.n);
+    return `<circle cx="${X(p.i)}" cy="${Y(p.n)}" r="5" fill="${a.c}" stroke="var(--surf)" stroke-width="2"/>`;
+  }).join("");
+  const fechas = dias.map((x,i) => (i % 3 === 0 || i === dias.length-1)
+    ? `<text x="${X(i)}" y="${H-10}" text-anchor="middle" font-size="11" fill="var(--tx3)">${fmtF(x.f)}</text>` : "").join("");
+
+  return `<div class="card">
+    <div class="card-h"><h2>Cómo te has sentido</h2>
+      <span class="sub num">${fmtFL(diaISO(13))} – ${fmtFL(hoyISO())}</span></div>
+    <div class="graf"><svg viewBox="0 0 ${W} ${H}" role="img"
+        aria-label="Estado de ánimo de los últimos 14 días">
+      ${ticks}${linea}${puntos}${fechas}
+    </svg></div>
+    <div class="leg">${ANIMOS.map(a =>
+      `<span><i style="background:${a.c};"></i>${a.et}</span>`).join("")}</div></div>`;
+}
+
+/* últimos días con algo anotado */
+function historialDiario(){
+  const fs = Object.keys(S.diario).sort().reverse().slice(0, 14)
+    .filter(f => { const d = S.diario[f]; return d && (d.animo || d.nota || Object.keys(d.sintomas||{}).some(k => d.sintomas[k] > 0)); });
+  if(!fs.length) return "";
+
+  const filas = fs.map(f => {
+    const d = S.diario[f], a = animoDe(d.animo);
+    const cons = Object.entries(d.sintomas || {}).filter(([,v]) => v > 0)
+      .map(([k,v]) => { const s = (S.cfg.sintomas||[]).find(x => x.id === k);
+        return s ? esc(s.nombre) + " (" + NIV_ET[v].toLowerCase() + ")" : ""; })
+      .filter(Boolean).join(" · ");
+    return `<div class="ex">
+      <div class="f num">${fmtFL(f)}</div>
+      <div style="flex:0 0 auto;display:grid;place-items:center;width:30px;">
+        ${a ? caraSVG(a, 26) : '<span style="color:var(--tx3);">—</span>'}</div>
+      <div class="det">${cons || (d.nota ? "" : "sin síntomas")}${
+        d.nota ? (cons ? "<br>" : "") + "<i>" + esc(d.nota) + "</i>" : ""}</div>
+      <button class="btn-x" data-deldia="${esc(f)}" title="Borrar el día" aria-label="Borrar este día">×</button>
+    </div>`;
+  }).join("");
+
+  return `<div class="card"><div class="card-h"><h2>Días anotados</h2>
+    <span class="sub num">${fs.length}</span></div>${filas}</div>`;
 }
 
 /* ===================== vista: Exámenes ===================== */
@@ -461,6 +852,41 @@ function textoResumen(){
   }
   if(olv.length) L.push("• Días incompletos: " + olv.join(", "));
   L.push("");
+  L.push("CÓMO SE HA SENTIDO (últimos 14 días)");
+  {
+    const fs = [];
+    for(let i=13; i>=0; i--){ const f = diaISO(i); if(S.diario[f]) fs.push(f); }
+    if(!fs.length) L.push("• Sin registros en el diario");
+    else {
+      const con = fs.filter(f => S.diario[f].animo);
+      if(con.length){
+        const prom = con.reduce((a,f) => a + S.diario[f].animo, 0) / con.length;
+        L.push("• Ánimo promedio: " + prom.toFixed(1) + " de 5 (" + con.length + " días anotados)");
+        const malos = con.filter(f => S.diario[f].animo <= 2).map(f => fmtF(f));
+        if(malos.length) L.push("• Días que se sintió mal o regular: " + malos.join(", "));
+      }
+      /* síntomas: cuántos días apareció cada uno y su nivel máximo */
+      const acum = {};
+      for(const f of fs)
+        for(const [k,v] of Object.entries(S.diario[f].sintomas || {}))
+          if(v > 0){ acum[k] = acum[k] || { dias:0, max:0 }; acum[k].dias++; acum[k].max = Math.max(acum[k].max, v); }
+      const ks = Object.keys(acum);
+      if(ks.length){
+        L.push("• Síntomas registrados:");
+        for(const k of ks.sort((a,b) => acum[b].dias - acum[a].dias)){
+          const s = (S.cfg.sintomas||[]).find(x => x.id === k);
+          L.push("    - " + (s ? s.nombre : k) + ": " + acum[k].dias + " día" + (acum[k].dias>1?"s":"")
+                 + ", máximo «" + NIV_ET[acum[k].max] + "»");
+        }
+      } else L.push("• Sin síntomas marcados");
+      const notas = fs.filter(f => S.diario[f].nota);
+      if(notas.length){
+        L.push("• Notas:");
+        for(const f of notas.slice(-5)) L.push("    - " + fmtF(f) + ": " + S.diario[f].nota);
+      }
+    }
+  }
+  L.push("");
   L.push("EXÁMENES");
   if(S.examenes.length){
     L.push("Rango de referencia: " + S.cfg.rango.min + " – " + S.cfg.rango.max + " " + S.cfg.unidad);
@@ -512,6 +938,22 @@ function vCfg(){
       <button class="btn" id="m-add">Agregar medicamento</button>
     </div></div>
 
+    <div class="card"><div class="card-h"><h2>Síntomas del diario</h2>
+      <span class="sub num">${(S.cfg.sintomas||[]).length}</span></div>
+      ${ (S.cfg.sintomas||[]).map(s => `<div class="toma">
+          <div class="med"><div class="n">${esc(s.nombre)}</div></div>
+          <button class="btn-x" data-delsint="${esc(s.id)}" title="Quitar"
+            aria-label="Quitar síntoma">×</button></div>`).join("")
+        || `<div class="card-b vacio">Sin síntomas.</div>` }
+      <div class="card-b" style="border-top:1px solid var(--line);">
+        <p style="color:var(--tx3);font-size:12.5px;margin:0 0 11px;">
+          Son los efectos que se marcan día a día en el <b>Diario</b>.
+          Quitar uno no borra lo ya anotado.</p>
+        <div class="fila"><div class="campo"><label for="s-n">Nombre</label>
+          <input type="text" id="s-n" placeholder="Mareo, visión borrosa…"></div></div>
+        <button class="btn" id="s-add">Agregar síntoma</button>
+      </div></div>
+
     <div class="card"><div class="card-h"><h2>Examen de control</h2></div>
     <div class="card-b">
       <div class="fila">
@@ -550,6 +992,30 @@ function vCfg(){
       ${notiOk ? `<button class="btn sec" id="n-test" style="margin-left:8px;">Probar aviso</button>` : ""}
     </div></div>
 
+    <div class="card"><div class="card-h"><h2>Instalar en este teléfono</h2>
+      <span class="sub">${yaInstalada() ? "ya instalada" : "no instalada"}</span></div>
+    <div class="card-b">
+      ${ yaInstalada()
+        ? `<p style="color:var(--tx2);font-size:13.5px;margin:0;">
+             Ya estás usándola instalada: tiene su ícono en la pantalla de inicio,
+             se abre a pantalla completa y funciona sin internet.</p>`
+        : promptInstalar
+        ? `<p style="color:var(--tx2);font-size:13.5px;margin:0 0 11px;">
+             Queda con su propio ícono, se abre a pantalla completa y funciona sin internet.
+             No ocupa casi espacio y no pasa por ninguna tienda de aplicaciones.</p>
+           <button class="btn" id="i-add">Instalar app</button>`
+        : esIOS()
+        ? `<p style="color:var(--tx2);font-size:13.5px;margin:0 0 9px;">Desde Safari:</p>
+           <ol class="pasos" style="color:var(--tx2);font-size:13.5px;margin:0;padding-left:18px;">
+             <li>Toca <kbd>Compartir</kbd> en la barra de abajo.</li>
+             <li>Elige <kbd>Agregar a inicio</kbd>.</li>
+             <li>Confirma con <kbd>Agregar</kbd>.</li></ol>`
+        : `<p style="color:var(--tx2);font-size:13.5px;margin:0;">
+             Abre esta misma dirección en <b>Chrome</b> desde el celular y usa
+             <b>Menú ⋮ → Agregar a pantalla principal</b>.
+             Desde el computador, el navegador muestra un ícono de instalar en la barra de direcciones.</p>` }
+    </div></div>
+
     <div class="card"><div class="card-h"><h2>Respaldo</h2></div>
     <div class="card-b">
       <p style="color:var(--tx2);font-size:13.5px;margin:0 0 11px;">
@@ -567,7 +1033,9 @@ function vCfg(){
 /* ===================== render ===================== */
 function render(){
   document.getElementById("main").innerHTML =
-    S.vista==="hoy" ? vHoy() : S.vista==="ex" ? vEx() : S.vista==="res" ? vRes() : vCfg();
+    (S.vista==="hoy" ? bannerInstalar() : "") +
+    (S.vista==="hoy" ? vHoy() : S.vista==="dia" ? vDiario()
+     : S.vista==="ex" ? vEx() : S.vista==="res" ? vRes() : vCfg());
   document.getElementById("pac").textContent = S.cfg.paciente || "";
   for(const b of document.querySelectorAll("nav button"))
     b.setAttribute("aria-selected", b.dataset.v === S.vista ? "true" : "false");
@@ -587,6 +1055,18 @@ async function marcarToma(key){
   else regs[key] = { tomada:true, horaReal:nHoy(), porNombre:S.quien || "" };
   S.tomas[f] = { fecha:f, registros:regs };
   await idbSet("tomas", f, S.tomas[f]);
+  render();
+}
+
+/* guarda el día del diario; si queda vacío, borra el registro */
+async function guardarDiario(f, parcial){
+  const act = diaDe(f);
+  const d = { ...act, ...parcial, fecha:f, sintomas:{ ...act.sintomas, ...(parcial.sintomas||{}) } };
+  /* los síntomas desmarcados salen del objeto, no quedan como undefined */
+  for(const k of Object.keys(d.sintomas)) if(typeof d.sintomas[k] !== "number") delete d.sintomas[k];
+  const vacio = !d.animo && !d.nota && !Object.keys(d.sintomas).some(k => d.sintomas[k] > 0);
+  if(vacio){ delete S.diario[f]; await idbDel("diario", f); }
+  else     { S.diario[f] = d;   await idbSet("diario", f, d); }
   render();
 }
 
@@ -616,14 +1096,18 @@ async function cargarExamenes(){
 
 async function exportar(){
   const datos = {
-    app: "control-tratamiento", version: 1,
+    app: "control-tratamiento", version: 2,
     exportado: new Date().toISOString(),
     config: S.cfg,
     tomas: await (async () => {
       const k = await idbKeys("tomas"), v = await idbVals("tomas"), o = {};
       k.forEach((kk,i) => o[kk] = v[i]); return o;
     })(),
-    examenes: await idbVals("examenes")
+    examenes: await idbVals("examenes"),
+    diario: await (async () => {
+      const k = await idbKeys("diario"), v = await idbVals("diario"), o = {};
+      k.forEach((kk,i) => o[kk] = v[i]); return o;
+    })()
   };
   const blob = new Blob([JSON.stringify(datos, null, 2)], { type:"application/json" });
   const url = URL.createObjectURL(blob);
@@ -645,6 +1129,7 @@ async function importar(file){
   if(d.config) await idbSet("config", "tratamiento", d.config);
   for(const [k,v] of Object.entries(d.tomas || {})) await idbSet("tomas", k, v);
   for(const e of (d.examenes || [])) await idbSet("examenes", e.id || nuevoId(), e);
+  for(const [k,v] of Object.entries(d.diario || {})) await idbSet("diario", k, v);
   await cargarTodo();
   render();
   aviso("Respaldo restaurado");
@@ -729,6 +1214,35 @@ document.getElementById("main").addEventListener("click", async e => {
   const t = e.target;
 
   const bt = t.closest(".btn-toma");        if(bt){ marcarToma(bt.dataset.k); return; }
+
+  /* ---- diario ---- */
+  const ir = t.closest("[data-ir]");
+  if(ir){ S.vista = ir.dataset.ir; render(); window.scrollTo(0,0); return; }
+
+  const ba = t.closest("[data-animo]");
+  if(ba){
+    const n = parseInt(ba.dataset.animo, 10);
+    const act = diaDe(hoyISO()).animo;
+    await guardarDiario(hoyISO(), { animo: act === n ? null : n });
+    return;
+  }
+  const bs = t.closest("[data-sint]");
+  if(bs){
+    const id = bs.dataset.sint, n = parseInt(bs.dataset.n, 10);
+    const act = diaDe(hoyISO()).sintomas[id];
+    await guardarDiario(hoyISO(), { sintomas: { [id]: act === n ? undefined : n } });
+    return;
+  }
+  const dd = t.closest("[data-deldia]");
+  if(dd){
+    if(!confirm("¿Borrar lo anotado ese día?")) return;
+    delete S.diario[dd.dataset.deldia];
+    await idbDel("diario", dd.dataset.deldia);
+    render(); aviso("Día borrado"); return;
+  }
+  const ds = t.closest("[data-delsint]");
+  if(ds){ guardarCfg({ sintomas: (S.cfg.sintomas||[]).filter(s => s.id !== ds.dataset.delsint) }); return; }
+
   const del = t.closest("[data-del]");
   if(del){
     if(!confirm("¿Eliminar este examen?")) return;
@@ -740,6 +1254,19 @@ document.getElementById("main").addEventListener("click", async e => {
 
   switch(t.id){
     case "ex-add": agregarExamen(); break;
+
+    case "d-nota-save":
+      await guardarDiario(hoyISO(), { nota: document.getElementById("d-nota").value.trim() });
+      aviso("Anotado");
+      break;
+
+    case "s-add": {
+      const n = document.getElementById("s-n").value.trim();
+      if(!n){ aviso("Falta el nombre"); document.getElementById("s-n").focus(); return; }
+      guardarCfg({ sintomas: [...(S.cfg.sintomas||[]), { id:"s"+nuevoId(), nombre:n }] });
+      aviso("Síntoma agregado");
+      break;
+    }
 
     case "m-add": {
       const n = document.getElementById("m-n").value.trim();
@@ -771,16 +1298,30 @@ document.getElementById("main").addEventListener("click", async e => {
       aviso("Nombre guardado");
       break;
 
+    case "i-add": {
+      if(!promptInstalar){ aviso("Tu navegador no ofrece la instalación directa"); return; }
+      promptInstalar.prompt();
+      const r = await promptInstalar.userChoice;
+      promptInstalar = null;
+      if(r && r.outcome !== "accepted") aviso("Puedes instalarla después desde Ajustes");
+      render();
+      break;
+    }
+    case "i-no":
+      try { localStorage.setItem(DESCARTE, "1"); } catch(_){ }
+      render();
+      break;
+
     case "n-act":  activarRecordatorios(); break;
     case "n-test": notificar("Aviso de prueba", "Así se verá el recordatorio de una toma."); break;
 
     case "r-exp": exportar(); break;
     case "r-imp": document.getElementById("fimport").click(); break;
     case "r-del":
-      if(!confirm("Esto borra medicamentos, tomas y exámenes de este teléfono. ¿Seguro?")) return;
+      if(!confirm("Esto borra medicamentos, tomas, diario y exámenes de este teléfono. ¿Seguro?")) return;
       if(!confirm("Última confirmación: se borra todo y no se puede deshacer.")) return;
       for(const s of STORES) await idbClear(s);
-      S.cfg = { ...CFG_DEF }; S.tomas = {}; S.examenes = [];
+      S.cfg = { ...CFG_DEF, sintomas:[...SINT_DEF] }; S.tomas = {}; S.examenes = []; S.diario = {};
       render(); aviso("Datos borrados");
       break;
 
@@ -808,8 +1349,11 @@ document.getElementById("main").addEventListener("click", async e => {
 async function cargarTodo(){
   const cfg = await idbGet("config", "tratamiento");
   S.cfg = cfg ? { ...CFG_DEF, ...cfg } : { ...CFG_DEF };
+  if(!Array.isArray(S.cfg.sintomas)) S.cfg.sintomas = [...SINT_DEF];
   const k = await idbKeys("tomas"), v = await idbVals("tomas");
   S.tomas = {}; k.forEach((kk,i) => S.tomas[kk] = v[i]);
+  const kd = await idbKeys("diario"), vd = await idbVals("diario");
+  S.diario = {}; kd.forEach((kk,i) => S.diario[kk] = vd[i]);
   await cargarExamenes();
 }
 

@@ -1,5 +1,5 @@
 /* Service Worker — Control de Tratamiento (offline-first + recordatorios) */
-const CACHE = 'control-tratamiento-v1';
+const CACHE = 'control-tratamiento-v3';
 const ASSETS = [
   './',
   './index.html',
