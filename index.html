@@ -262,6 +262,26 @@ nav svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;
 .racha .rt{flex:1;min-width:0;font-size:13.5px;color:var(--tx);}
 .racha .rt b{color:var(--ac3);}
 
+/* ===================== navegador de días ===================== */
+.navdia{display:flex;align-items:center;gap:9px;background:var(--surf);
+  border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);
+  padding:8px 10px;margin-bottom:10px;}
+.navdia .nd{flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+  border:1.5px solid var(--line2);background:var(--surf2);color:var(--ac-tx);
+  font-size:21px;line-height:1;display:grid;place-items:center;padding:0;
+  transition:transform .14s ease;}
+.navdia .nd:active{transform:scale(.9);}
+.navdia .nd:disabled{opacity:.3;}
+.navdia .nf{flex:1;min-width:0;text-align:center;}
+.navdia .n1{font-weight:700;font-size:15px;line-height:1.15;}
+.navdia .n2{color:var(--tx3);font-size:12px;}
+.navdia .hoybtn{flex:0 0 auto;background:var(--ac-soft);color:var(--ac-tx);
+  border:1px solid var(--ac);border-radius:99px;padding:7px 13px;
+  font-size:12.5px;font-weight:700;white-space:nowrap;}
+.atrasado{background:var(--wa-soft);border:1px solid var(--wa);color:var(--wa);
+  border-radius:var(--r);padding:9px 13px;margin-bottom:10px;font-size:12.8px;}
+.tarde{color:var(--wa)!important;}
+
 /* ===================== ilustración de vacío ===================== */
 .ilus{display:block;margin:0 auto 10px;width:118px;height:auto;}
 .ilus .fl{animation:flota 4.2s ease-in-out infinite;transform-origin:center;}
@@ -349,7 +369,10 @@ const SINT_DEF = [
 ];
 const CFG_DEF = { paciente:"", unidad:"mEq/L", rango:{min:0.6,max:1.2}, medicamentos:[],
                   sintomas:[...SINT_DEF], recordatorios:false };
-const S = { vista:"hoy", cfg:{...CFG_DEF}, tomas:{}, examenes:[], diario:{}, quien:"", listo:false };
+/* S.fecha = el día que se está mirando/anotando. Arranca en hoy y se puede
+   retroceder para completar días que quedaron sin marcar. Nunca va al futuro. */
+const S = { vista:"hoy", fecha:"", fijado:false, cfg:{...CFG_DEF}, tomas:{}, examenes:[], diario:{},
+            quien:"", listo:false };
 
 /* ánimo: 1 = muy mal … 5 = muy bien */
 const ANIMOS = [
@@ -489,6 +512,38 @@ function adherencia(n){
   return tot ? { tot, hechas, pct: Math.round(hechas*100/tot) } : null;
 }
 
+/* ---------- el día que se está mirando ---------- */
+const DIAS_SEM = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+const verFecha = () => S.fecha || hoyISO();
+const esHoy    = () => verFecha() === hoyISO();
+const corre    = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate()+n); return aISO(d); };
+
+/* nombre amable del día: hoy / ayer / miércoles 8 */
+function nombreDia(iso){
+  if(iso === hoyISO())   return "Hoy";
+  if(iso === diaISO(1))  return "Ayer";
+  const d = new Date(iso + "T12:00:00");
+  const n = DIAS_SEM[d.getDay()];
+  return n.charAt(0).toUpperCase() + n.slice(1) + " " + d.getDate();
+}
+
+/* barra para moverse entre días; el botón de avanzar se apaga en hoy */
+function navDia(){
+  const f = verFecha(), fin = esHoy();
+  return `<div class="navdia">
+    <button class="nd" data-dia="${corre(f,-1)}" aria-label="Día anterior">&lsaquo;</button>
+    <div class="nf">
+      <div class="n1">${nombreDia(f)}</div>
+      <div class="n2 num">${fmtFL(f)}</div>
+    </div>
+    <button class="nd" data-dia="${fin ? "" : corre(f,1)}" ${fin ? "disabled" : ""}
+      aria-label="Día siguiente">&rsaquo;</button>
+    ${fin ? "" : `<button class="hoybtn" data-dia="${hoyISO()}">Ir a hoy</button>`}
+  </div>` + (fin ? "" : `<div class="atrasado">
+      Estás anotando un día pasado. Lo que marques queda registrado como
+      <b>anotado después</b>.</div>`);
+}
+
 /* ---------- diario: ánimo y síntomas ---------- */
 const DIA_DEF = { animo:null, sintomas:{}, nota:"" };
 function diaDe(f){ return S.diario[f] || { fecha:f, ...DIA_DEF, sintomas:{} }; }
@@ -515,8 +570,10 @@ function semana(){
     const n = esp.filter(e => rr[e.key] && rr[e.key].tomada).length;
     const comp = esp.length && n === esp.length;
     const s = comp ? "ok" : n > 0 ? "pa" : (i === 0 ? "" : "no");
-    out += `<div class="dia" data-s="${s}" data-hoy="${i===0?1:0}" data-nuevo="${comp&&i===0?1:0}"
-        title="${fmtFL(fd)}: ${n} de ${esp.length}">
+    /* tocar un círculo lleva a ese día, para completarlo */
+    out += `<div class="dia" data-s="${s}" data-hoy="${fd===verFecha()?1:0}"
+        data-dia="${fd}" data-nuevo="${comp&&i===0?1:0}" role="button" tabindex="0"
+        title="${fmtFL(fd)}: ${n} de ${esp.length} — tocar para ir a ese día">
       <div class="dl">${L[d.getDay()]}</div>
       <div class="db">${comp ? chulo : (n > 0 ? n : (i===0 ? "·" : "–"))}</div>
     </div>`;
@@ -526,7 +583,7 @@ function semana(){
 
 /* ===================== vista: Hoy ===================== */
 function vHoy(){
-  const esp = esperadas(), f = hoyISO(), r = regsDe(f);
+  const esp = esperadas(), f = verFecha(), r = regsDe(f);
   if(!esp.length) return `<div class="card"><div class="card-b vacio">
       ${ilusPastilla()}
       Todavía no hay medicamentos configurados.<br>
@@ -540,7 +597,10 @@ function vHoy(){
       <div class="med">
         <div class="n">${esc(e.nombre)}</div>
         <div class="d num">${esc(e.dosis)}</div>
-        ${on ? `<div class="quien">Marcada ${esc(t.horaReal||"")}${t.porNombre ? " · "+esc(t.porNombre) : ""}</div>` : ""}
+        ${on ? `<div class="quien${t.tarde ? " tarde" : ""}">${
+            t.tarde ? "Anotada después" + (t.anotadaEl ? " (" + fmtF(t.anotadaEl) + ")" : "")
+                    : "Marcada " + esc(t.horaReal||"")
+          }${t.porNombre ? " · "+esc(t.porNombre) : ""}</div>` : ""}
       </div>
       <button class="btn-toma" data-on="${on?1:0}" data-k="${esc(e.key)}">${on ? "✓ Tomada" : "Marcar"}</button>
     </div>`;
@@ -563,12 +623,14 @@ function vHoy(){
            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="7.5" y="2.5" width="9" height="19" rx="4.5"/><path d="M7.5 12h9"/></svg></div>
     <div class="ht">
-      <div class="h1">${falta === 0 ? "¡Día completo!" : falta === esp.length ? "Partamos el día" : "Vas bien"}</div>
+      <div class="h1">${falta === 0 ? "¡Día completo!"
+        : falta === esp.length ? (esHoy() ? "Partamos el día" : "Día sin marcar")
+        : "Falta poco"}</div>
       <div class="h2">${falta === 0
-        ? "Marcaste todas las tomas de hoy."
+        ? (esHoy() ? "Marcaste todas las tomas de hoy." : "Este día quedó completo.")
         : falta === 1 ? "Queda 1 toma por marcar." : "Quedan " + falta + " tomas por marcar."}</div>
     </div>
-    <div class="pct"><b class="num">${pctHoy}%</b><span>hoy</span></div>
+    <div class="pct"><b class="num">${pctHoy}%</b><span>${esHoy() ? "hoy" : "ese día"}</span></div>
   </div>`;
 
   const r7 = racha();
@@ -578,8 +640,8 @@ function vHoy(){
     ? `<div class="racha">${estrella}<div class="rt"><b>${r7} días seguidos</b> sin saltarte ninguna toma. Sigue así.</div></div>`
     : "";
 
-  return hero + rachaHTML + `<div class="card">
-    <div class="card-h"><h2>Tomas de hoy</h2><span class="sub num">${hechas} de ${esp.length}</span></div>
+  return navDia() + hero + rachaHTML + `<div class="card">
+    <div class="card-h"><h2>Tomas del día</h2><span class="sub num">${hechas} de ${esp.length}</span></div>
     ${filas}
     <div class="card-b" style="padding-top:8px;">
       ${semana()}
@@ -626,7 +688,7 @@ function recordatorioDiario(){
 
 /* ===================== vista: Diario ===================== */
 function vDiario(){
-  const f = hoyISO(), d = diaDe(f);
+  const f = verFecha(), d = diaDe(f);
   const sints = S.cfg.sintomas || [];
 
   const caras = ANIMOS.map(a => `<button data-animo="${a.n}" aria-pressed="${d.animo===a.n}"
@@ -641,7 +703,7 @@ function vDiario(){
       Sin síntomas configurados. Agrégalos en <b>Ajustes</b>.</div>`;
 
   const hoyCard = `<div class="card">
-    <div class="card-h"><h2>¿Cómo te sientes hoy?</h2>
+    <div class="card-h"><h2>${esHoy() ? "¿Cómo te sientes hoy?" : "¿Cómo te sentiste?"}</h2>
       <span class="sub num">${fmtFL(f)}</span></div>
     <div class="card-b"><div class="animo">${caras}</div></div></div>
 
@@ -657,7 +719,7 @@ function vDiario(){
       <button class="btn" id="d-nota-save">Guardar nota</button>
     </div></div>`;
 
-  return hoyCard + graficoAnimo() + historialDiario();
+  return navDia() + hoyCard + graficoAnimo() + historialDiario();
 }
 
 /* gráfico del ánimo de los últimos 14 días */
@@ -1049,13 +1111,27 @@ async function guardarCfg(parcial){
 }
 
 async function marcarToma(key){
-  const f = hoyISO(), act = regsDe(f), on = act[key] && act[key].tomada;
+  const f = verFecha(), act = regsDe(f), on = act[key] && act[key].tomada;
   const regs = { ...act };
   if(on) delete regs[key];
-  else regs[key] = { tomada:true, horaReal:nHoy(), porNombre:S.quien || "" };
+  else if(f === hoyISO())
+    regs[key] = { tomada:true, horaReal:nHoy(), porNombre:S.quien || "" };
+  else
+    /* día pasado: no se inventa la hora. Queda marcado como anotado después,
+       con la fecha real en que se completó. Así el registro no miente. */
+    regs[key] = { tomada:true, tarde:true, anotadaEl:hoyISO(), porNombre:S.quien || "" };
   S.tomas[f] = { fecha:f, registros:regs };
   await idbSet("tomas", f, S.tomas[f]);
   render();
+}
+
+/* cambiar el día que se está mirando; nunca hacia el futuro */
+function irADia(iso){
+  if(!iso || iso > hoyISO()) return;
+  S.fecha  = iso;
+  S.fijado = (iso !== hoyISO());   /* volver a hoy suelta el anclaje */;
+  render();
+  window.scrollTo(0, 0);
 }
 
 /* guarda el día del diario; si queda vacío, borra el registro */
@@ -1215,6 +1291,10 @@ document.getElementById("main").addEventListener("click", async e => {
 
   const bt = t.closest(".btn-toma");        if(bt){ marcarToma(bt.dataset.k); return; }
 
+  /* ---- cambio de día ---- */
+  const nd = t.closest("[data-dia]");
+  if(nd){ irADia(nd.dataset.dia); return; }
+
   /* ---- diario ---- */
   const ir = t.closest("[data-ir]");
   if(ir){ S.vista = ir.dataset.ir; render(); window.scrollTo(0,0); return; }
@@ -1222,15 +1302,15 @@ document.getElementById("main").addEventListener("click", async e => {
   const ba = t.closest("[data-animo]");
   if(ba){
     const n = parseInt(ba.dataset.animo, 10);
-    const act = diaDe(hoyISO()).animo;
-    await guardarDiario(hoyISO(), { animo: act === n ? null : n });
+    const act = diaDe(verFecha()).animo;
+    await guardarDiario(verFecha(), { animo: act === n ? null : n });
     return;
   }
   const bs = t.closest("[data-sint]");
   if(bs){
     const id = bs.dataset.sint, n = parseInt(bs.dataset.n, 10);
-    const act = diaDe(hoyISO()).sintomas[id];
-    await guardarDiario(hoyISO(), { sintomas: { [id]: act === n ? undefined : n } });
+    const act = diaDe(verFecha()).sintomas[id];
+    await guardarDiario(verFecha(), { sintomas: { [id]: act === n ? undefined : n } });
     return;
   }
   const dd = t.closest("[data-deldia]");
@@ -1256,7 +1336,7 @@ document.getElementById("main").addEventListener("click", async e => {
     case "ex-add": agregarExamen(); break;
 
     case "d-nota-save":
-      await guardarDiario(hoyISO(), { nota: document.getElementById("d-nota").value.trim() });
+      await guardarDiario(verFecha(), { nota: document.getElementById("d-nota").value.trim() });
       aviso("Anotado");
       break;
 
@@ -1370,11 +1450,20 @@ async function cargarTodo(){
     aviso("No se pudo abrir el almacenamiento del navegador");
     return;
   }
+  S.fecha = hoyISO(); S.fijado = false;
   S.listo = true;
   render();
   revisarPendientes();
   setInterval(revisarPendientes, 60000);
-  document.addEventListener("visibilitychange", () => { if(!document.hidden){ render(); revisarPendientes(); } });
+  document.addEventListener("visibilitychange", () => {
+    if(!document.hidden){
+      /* Si el usuario no eligió un día a mano, seguimos pegados a "hoy".
+         Así, si pasó la medianoche con la app de fondo, al volver no queda
+         anotando el día de ayer sin darse cuenta. */
+      if(!S.fijado) S.fecha = hoyISO();
+      render(); revisarPendientes();
+    }
+  });
 
   if("serviceWorker" in navigator){
     try { await navigator.serviceWorker.register("./sw.js"); } catch(_){ }
